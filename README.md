@@ -152,7 +152,7 @@ print(generated_text[0])
 
 ## Expected Output
 Given the prompt "In a world where artificial intelligence", the model might generate something like:
-```
+```python
 Generated Text:
 "In a world where artificial intelligence is ubiquitous, humanity must navigate the complex relationship between man and machine..."
 ```
@@ -236,7 +236,7 @@ for result in results:
 ```
 
 ## Expected Output
-```
+```python
 Prompt: Summarize the following article: {}
 Generated Summary: Climate change refers to...
 Accuracy: 0.85
@@ -246,4 +246,127 @@ F1 Score: 0.82
 ```
 
 ## Conclusion
-The experiment demonstrates that the design of prompts can significantly impact the performance of an AI model. Effective prompt design can lead to better task outcomes, as evidenced by the evaluation metrics.
+The experiment demonstrates that the design of prompts can significantly impact the performance of an AI model. Effective prompt design can lead to better task outcomes, as evidenced by the evaluation metrics
+
+## Problem Statement 4: Data Analysis
+The task is to analyze a dataset and generate insights using a combination of descriptive statistics and visualizations.
+
+## Approach
+
+### 1. Data Loading and Exploration
+
+- **Loading the dataset:** The dataset is loaded into a Pandas DataFrame for exploration and analysis.
+- **Initial exploration:** The first few rows of the dataset are displayed to get an overview of the data.
+- **Data structure:** The data types, number of columns, and non-null counts are examined to understand the structure of the dataset.
+
+### 2. Descriptive Statistics
+
+- **Summary statistics:** Descriptive statistics such as mean, median, standard deviation, and others are computed to summarize the central tendency, dispersion, and shape of the dataset’s distribution.
+- **Missing values:** The dataset is checked for any missing values.
+
+### 3. Data Visualization
+
+- **Data distribution:** A histogram and KDE plot are used to visualize the distribution of a numerical column.
+- **Correlation analysis:** A heatmap is generated to display the correlation matrix of numerical variables, highlighting relationships between them.
+- **Categorical analysis:** A countplot is created to analyze the distribution of a categorical variable.
+- **Pairplot:** Relationships between pairs of variables are visualized using a pairplot.
+- **Boxplot:** Outliers in the data are identified using a boxplot for a specific numerical column across different categories.
+
+### 4. Insights and Observations
+
+- **Grouped analysis:** The dataset is grouped by a categorical column, and the mean of a numerical column is calculated for each group. This helps in identifying trends and patterns across categories.
+- **Key insights:** Correlations and other notable patterns identified during the analysis are summarized.
+
+```python
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+# Replace 'dataset.csv' with your dataset file
+df = pd.read_csv('dataset.csv')
+
+# Display the first few rows of the dataset
+print("First 5 rows of the dataset:")
+display(df.head())
+
+# Basic Information about the dataset
+print("\nBasic Information:")
+display(df.info())
+
+# Summary statistics
+print("\nSummary Statistics:")
+display(df.describe())
+
+# Check for missing values
+print("\nMissing Values:")
+display(df.isnull().sum())
+
+# Data distribution visualization
+plt.figure(figsize=(10, 6))
+sns.histplot(df['column_of_interest'], kde=True)
+plt.title('Distribution of column_of_interest')
+plt.xlabel('column_of_interest')
+plt.ylabel('Frequency')
+plt.show()
+
+# Correlation matrix
+plt.figure(figsize=(12, 8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Matrix')
+plt.show()
+
+# Categorical variable analysis
+plt.figure(figsize=(10, 6))
+sns.countplot(data=df, x='categorical_column')
+plt.title('Count of Categories in categorical_column')
+plt.xlabel('categorical_column')
+plt.ylabel('Count')
+plt.show()
+
+# Pairplot to analyze relationships between variables
+sns.pairplot(df, diag_kind='kde')
+plt.suptitle('Pairplot of the Dataset', y=1.02)
+plt.show()
+
+# Boxplot for outlier detection
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df, x='categorical_column', y='numerical_column')
+plt.title('Boxplot of numerical_column by categorical_column')
+plt.show()
+
+# Correlation analysis
+correlation = df['numerical_column1'].corr(df['numerical_column2'])
+print(f"\nCorrelation between numerical_column1 and numerical_column2: {correlation:.2f}")
+
+# Grouped analysis and insights
+grouped = df.groupby('categorical_column')['numerical_column'].mean().reset_index()
+print("\nGrouped Analysis - Mean of numerical_column by categorical_column:")
+display(grouped)
+
+# Visualize the grouped data
+plt.figure(figsize=(10, 6))
+sns.barplot(data=grouped, x='categorical_column', y='numerical_column')
+plt.title('Mean of numerical_column by categorical_column')
+plt.xlabel('categorical_column')
+plt.ylabel('Mean of numerical_column')
+plt.show()
+
+# Conclusion: Key insights and observations
+print("\nKey Insights and Observations:")
+# Add your insights and conclusions here, based on the analysis.
+
+```
+
+### 5. Conclusion
+
+The analysis provided a comprehensive overview of the dataset, revealing key insights such as the relationship between variables, data distribution, and potential outliers. These insights can guide further analysis or decision-making processes.
+
+## References
+
+- [Pandas Documentation](https://pandas.pydata.org/pandas-docs/stable/)
+- [NumPy Documentation](https://numpy.org/doc/stable/)
+- [Matplotlib Documentation](https://matplotlib.org/stable/contents.html)
+- [Seaborn Documentation](https://seaborn.pydata.org/)
