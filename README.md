@@ -159,6 +159,7 @@ Generated Text:
 
 Note: The actual generated text will vary depending on the model and settings.
 
+
 # Problem Statement 3: Prompt Engineering
 
 ## Problem Statement
@@ -175,6 +176,10 @@ The effectiveness of each prompt was assessed using string similarity metrics, i
 ### 3. Implementation
 
 The following Python script utilizes the Hugging Face `transformers` library for text generation and the `sklearn` library for evaluating the results. The script experiments with different prompts and evaluates the generated summaries against a reference summary.
+
+## Solution
+
+### Python Code
 
 ```python
 from transformers import pipeline, set_seed
@@ -248,6 +253,7 @@ F1 Score: 0.82
 ## Conclusion
 The experiment demonstrates that the design of prompts can significantly impact the performance of an AI model. Effective prompt design can lead to better task outcomes, as evidenced by the evaluation metrics
 
+
 # Problem Statement 4: Data Analysis
 The task is to analyze a dataset and generate insights using a combination of descriptive statistics and visualizations.
 
@@ -276,6 +282,10 @@ The task is to analyze a dataset and generate insights using a combination of de
 
 - **Grouped analysis:** The dataset is grouped by a categorical column, and the mean of a numerical column is calculated for each group. This helps in identifying trends and patterns across categories.
 - **Key insights:** Correlations and other notable patterns identified during the analysis are summarized.
+
+## Solution
+
+### Python Code
 
 ```python
 # Import necessary libraries
@@ -370,3 +380,89 @@ The analysis provided a comprehensive overview of the dataset, revealing key ins
 - [NumPy Documentation](https://numpy.org/doc/stable/)
 - [Matplotlib Documentation](https://matplotlib.org/stable/contents.html)
 - [Seaborn Documentation](https://seaborn.pydata.org/)
+
+
+# Problem Statement 5: Live Coding Session - API Integration
+Develop a Python script to integrate with an external API and fetch data based on user input. The script should use the `requests` library to make API calls, handle API responses and errors gracefully, and parse and display the fetched data in a user-friendly format.
+
+## Approach
+
+### 1. API Integration
+
+- **API URL:** The API endpoint URL is specified. This example uses a placeholder URL (`https://api.example.com/data`) and should be replaced with a real API.
+- **User Input:** The script prompts the user for input, which is then passed as a parameter to the API.
+- **API Request:** A GET request is sent to the API with the provided parameters using the `requests` library.
+
+### 2. Error Handling
+
+- **Graceful Error Handling:** The script includes error handling for various exceptions:
+  - `HTTPError`: Handles HTTP errors like 404 or 500.
+  - `ConnectionError`: Handles network-related errors.
+  - `Timeout`: Handles timeout errors.
+  - `RequestException`: Catches all other request-related errors.
+
+### 3. Data Parsing and Display
+
+- **Data Parsing:** The JSON response is parsed, and relevant fields are extracted.
+- **User-Friendly Display:** The fetched data is displayed in a readable format. For example, the script prints the `name` and `description` fields of each item in the response.
+
+## Solution
+
+### Python Code
+
+```python
+import requests
+
+def fetch_data_from_api(api_url, params):
+    """
+    Fetches data from the specified API using the provided parameters.
+
+    Args:
+        api_url (str): The URL of the API endpoint.
+        params (dict): A dictionary of parameters to pass with the API request.
+
+    Returns:
+        dict: The parsed JSON response from the API if successful.
+        None: If the API request fails.
+    """
+    try:
+        response = requests.get(api_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+        return data
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except requests.exceptions.ConnectionError as conn_err:
+        print(f"Connection error occurred: {conn_err}")
+    except requests.exceptions.Timeout as timeout_err:
+        print(f"Timeout error occurred: {timeout_err}")
+    except requests.exceptions.RequestException as req_err:
+        print(f"An error occurred: {req_err}")
+    return None
+
+def display_data(data):
+    """
+    Displays the fetched data in a user-friendly format.
+
+    Args:
+        data (dict): The JSON data to display.
+    """
+    if data:
+        for item in data.get('results', []):
+            print(f"Name: {item.get('name')}")
+            print(f"Description: {item.get('description')}")
+            print("-" * 40)
+    else:
+        print("No data available.")
+
+if __name__ == "__main__":
+    api_url = "https://api.example.com/data"
+    user_input = input("Enter your search query: ")
+    params = {'query': user_input}
+    data = fetch_data_from_api(api_url, params)
+    display_data(data)
+```
+
+### 5. Conclusion
+
+This script demonstrates how to integrate with an external API in Python, handle different types of errors gracefully, and display the fetched data in a user-friendly manner. The code is clean, well-structured, and includes comments to explain each part of the process.
